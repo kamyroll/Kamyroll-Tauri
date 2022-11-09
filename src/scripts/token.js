@@ -5,14 +5,14 @@ let token_valid = localStorage.getItem('token_valid');
 let currentDate = Math.floor(new Date().getTime() / 1000);
 
 async function testToken(token){
-  const url = 'https://api.kamyroll.tech/content/v1/search?query=naruto&limit=1&channel_id=adn';
+  const url = 'https://api.kamyroll.tech/content/v1/search';
   const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
     },
-  });
-  if(response.status==200){
+  }).then(r=>r.json());
+  if(response.code=="bad_channel_id"){
     return true;
   }else{
     return false;
